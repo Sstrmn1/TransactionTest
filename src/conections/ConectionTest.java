@@ -32,10 +32,6 @@ public class ConectionTest {
                 // Rollback a Savepoint
                 Savepoint sp = con.setSavepoint("spoint");
 
-                // Consulta Insert
-//                PreparedStatement insertStmt = con.prepareStatement(consultaInsert);
-//                insertStmt.executeUpdate();
-//                insertStmt.close();
                 // Consulta Select antes de la actualización
                 ResultSet rs = con.createStatement().executeQuery(consultaSelect);
                 if (rs.next()) {
