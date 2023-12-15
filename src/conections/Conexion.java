@@ -30,6 +30,8 @@ public class Conexion {
         try {
             Class.forName(DRIVER);
             this.cadena = DriverManager.getConnection(URL + BD, USUARIO, PASSWORD);
+            // Desactivar autocommit
+//            this.cadena.setAutoCommit(false);
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.exit(0);
@@ -86,7 +88,11 @@ public class Conexion {
 
     public void rollbackToSavepoint(Savepoint savepoint) {
         try {
-            cadena.rollback(savepoint);
+            if (savepoint != null) {
+                cadena.rollback(savepoint);
+            } else {
+                System.out.println("Savepoint is null. No rollback performed.");
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -94,7 +100,11 @@ public class Conexion {
 
     public void commit() {
         try {
-            cadena.commit();
+            if (savepoint != null) {
+                cadena.commit();
+            } else {
+                System.out.println("Savepoint is null. No commit performed.");
+            }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
